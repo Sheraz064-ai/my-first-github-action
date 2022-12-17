@@ -14,7 +14,7 @@ async function run() {
       pull_number: PRContext.number,
     });
 
-    console.log("pr title", PRInstance.data.title);
+    console.log("pr: ", PRInstance.data.title, PRInstance.data.body);
   } catch (error) {
     core.setFailed(error.message);
   }
