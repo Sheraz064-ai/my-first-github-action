@@ -9702,7 +9702,7 @@ async function run() {
 
     console.log("pr: ", PRInstance.data.title, PRInstance.data.body);
 
-    await client.rest.pulls.createReviewComment({
+    await client.rest.issues.createComment({
       owner,
       repo,
       pull_number: PRContext.number,
