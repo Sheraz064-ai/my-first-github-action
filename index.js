@@ -19,7 +19,7 @@ async function run() {
     await client.rest.issues.createComment({
       owner,
       repo,
-      pull_number: PRContext.number,
+      issue_number: PRContext.number,
       body: "Nice!!",
     });
   } catch (error) {
