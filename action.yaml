@@ -1,5 +1,10 @@
 name: 'PR Title Linter'
 description: 'Check PR title convention'
+inputs:
+  token:  # id of input
+    description: 'github token'
+    required: true
+    default: ''
 runs:
   using: 'node16'
   main: 'dist/index.js'
