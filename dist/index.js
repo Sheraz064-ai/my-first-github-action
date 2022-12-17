@@ -9701,12 +9701,20 @@ async function run() {
     });
 
     console.log("pr: ", PRInstance.data.title, PRInstance.data.body);
+
+    await client.rest.pulls.createReviewComment({
+      owner,
+      repo,
+      pull_number: PRContext.number,
+      body: "Nice!!",
+    });
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 run();
+
 })();
 
 module.exports = __webpack_exports__;
