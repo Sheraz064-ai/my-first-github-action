@@ -9507,6 +9507,32 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 798:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+const core = __nccwpck_require__(579);
+const github = __nccwpck_require__(2002);
+
+module.exports = async function lintPR(client, pr) {
+  const regExp = new RegExp(
+    /^(FEATURE|FIX|TASK)\s\|\sISSUE\s\#[1-9]{1,}\s\|\s[\w\s\']*$/,
+    "gm"
+  );
+  const isTitleValid = regExp.test(pr.title);
+  if (!isTitleValid) {
+    await client.rest.issues.createComment({
+      owner,
+      repo,
+      issue_number: pr.number,
+      body: "The format of pull request title is <strong>invalid</strong>",
+    });
+  }
+  return isTitleValid;
+};
+
+
+/***/ }),
+
 /***/ 8635:
 /***/ ((module) => {
 
@@ -9686,6 +9712,7 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(579);
 const github = __nccwpck_require__(2002);
+const lintPR = __nccwpck_require__(798);
 
 async function run() {
   try {
@@ -9700,14 +9727,14 @@ async function run() {
       pull_number: PRContext.number,
     });
 
-    console.log("pr: ", PRInstance.data.title, PRInstance.data.body);
-
-    await client.rest.issues.createComment({
-      owner,
-      repo,
-      issue_number: PRContext.number,
-      body: "Nice!!",
+    const isPRTitleValid = await lintPR(client, {
+      number: PRContext.number,
+      title: PRInstance.data.title,
     });
+
+    if (!isPRTitleValid) {
+      throw { message: "PR title is invalid" };
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
