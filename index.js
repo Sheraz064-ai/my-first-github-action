@@ -30,7 +30,14 @@ async function run() {
       owner,
       repo,
       issue_number: PRContext.number,
-      labels: ["PR validated"],
+      labels: [{ name: "PR validated" }],
+    });
+
+    await client.rest.issues.updateLabel({
+      owner,
+      repo,
+      name: "PR validated",
+      color: "#00FF00",
     });
   } catch (error) {
     core.setFailed(error.message);
