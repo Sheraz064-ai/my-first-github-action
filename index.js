@@ -18,6 +18,8 @@ async function run() {
     const isPRTitleValid = await lintPR(client, {
       number: PRContext.number,
       title: PRInstance.data.title,
+      owner,
+      repo,
     });
 
     if (!isPRTitleValid) {

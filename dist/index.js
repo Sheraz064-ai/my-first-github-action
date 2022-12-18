@@ -9521,8 +9521,8 @@ module.exports = async function lintPR(client, pr) {
   const isTitleValid = regExp.test(pr.title);
   if (!isTitleValid) {
     await client.rest.issues.createComment({
-      owner,
-      repo,
+      owner: pr.owner,
+      repo: pr.repo,
       issue_number: pr.number,
       body: "The format of pull request title is <strong>invalid</strong>",
     });
@@ -9730,6 +9730,8 @@ async function run() {
     const isPRTitleValid = await lintPR(client, {
       number: PRContext.number,
       title: PRInstance.data.title,
+      owner,
+      repo,
     });
 
     if (!isPRTitleValid) {
