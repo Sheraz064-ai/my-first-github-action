@@ -15,7 +15,7 @@ async function run() {
       pull_number: PRContext.number,
     });
 
-    const isPRTitleValid = lintPR(client, {
+    const isPRTitleValid = await lintPR(client, {
       number: PRContext.number,
       title: PRInstance.data.title,
     });
