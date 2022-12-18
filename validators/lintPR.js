@@ -2,10 +2,8 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 module.exports = async function lintPR(client, pr) {
-  const regExp = new RegExp(
-    /^(FEATURE|FIX|TASK)\s\|\sISSUE\s\#[1-9]{1,}\s\|\s[\w\s\']*$/,
-    "gm"
-  );
+  const prTitleRegex = core.getInput("title-regex");
+  const regExp = new RegExp(prTitleRegex, "gm");
   const isTitleValid = regExp.test(pr.title);
   if (!isTitleValid) {
     await client.rest.issues.createComment({
