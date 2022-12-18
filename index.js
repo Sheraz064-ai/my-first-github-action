@@ -30,7 +30,7 @@ async function run() {
       owner,
       repo,
       issue_number: PRContext.number,
-      labels: [{ name: "PR validated" }],
+      labels: ["PR validated"],
     });
 
     await client.rest.issues.updateLabel({
