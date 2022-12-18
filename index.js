@@ -25,6 +25,13 @@ async function run() {
     if (!isPRTitleValid) {
       throw { message: "PR title is invalid" };
     }
+
+    await client.rest.issues.addLabels({
+      owner,
+      repo,
+      issue_number: PRContext.number,
+      labels: ["PR validated"],
+    });
   } catch (error) {
     core.setFailed(error.message);
   }

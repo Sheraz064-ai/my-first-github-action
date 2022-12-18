@@ -9524,6 +9524,12 @@ module.exports = async function lintPR(client, pr) {
       issue_number: pr.number,
       body: "The format of pull request title is <strong>invalid</strong>",
     });
+    await client.rest.issues.addLabels({
+      owner,
+      repo,
+      issue_number: PRContext.number,
+      labels: ["PR validated failed"],
+    });
   }
   return isTitleValid;
 };
@@ -9735,6 +9741,13 @@ async function run() {
     if (!isPRTitleValid) {
       throw { message: "PR title is invalid" };
     }
+
+    await client.rest.issues.addLabels({
+      owner,
+      repo,
+      issue_number: PRContext.number,
+      labels: ["PR validated"],
+    });
   } catch (error) {
     core.setFailed(error.message);
   }
