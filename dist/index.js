@@ -9753,7 +9753,7 @@ async function run() {
       owner,
       repo,
       name: "PR validated",
-      color: "#00FF00",
+      color: "00FF00",
       new_name: "PR is valid",
     });
   } catch (error) {
