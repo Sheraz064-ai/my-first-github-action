@@ -7,7 +7,7 @@ inputs:
     default: ''
   title-regex:
     description: 'regex for PR title'
-    default: '/^(FEATURE|FIX|TASK)\s\|\sISSUE\s\#[1-9]{1,}\s\|\s[\w\s\'\]*$/'
+    default: '/^(FEATURE|FIX|TASK)\s\|\sISSUE\s\#[1-9]{1,}\s\|\s[\w\s]*$/'
 runs:
   using: 'node16'
   main: 'dist/index.js'
