@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const lintPR = require("./validators/lintPR");
 
 async function run() {
   try {
@@ -14,14 +15,14 @@ async function run() {
       pull_number: PRContext.number,
     });
 
-    console.log("pr: ", PRInstance.data.title, PRInstance.data.body);
-
-    await client.rest.issues.createComment({
-      owner,
-      repo,
-      issue_number: PRContext.number,
-      body: "Nice!!",
+    const isPRTitleValid = lintPR(client, {
+      number: PRContext.number,
+      title: PRInstance.data.title,
     });
+
+    if (!isPRTitleValid) {
+      throw { message: "PR title is invalid" };
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
